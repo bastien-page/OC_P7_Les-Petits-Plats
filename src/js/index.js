@@ -1,4 +1,7 @@
 import CreateTag from "./CreateTag";
+import CreateCard from "./CreateCard";
+
+import { recipes } from "./recipes";
 
 // Ajout des tags
 
@@ -9,3 +12,15 @@ testTag.forEach((tag) => {
     new CreateTag(document.querySelector(".tags"), tag.textContent);
   });
 });
+
+// TEST DES CARD
+
+let test = [recipes[0], recipes[1], recipes[2]];
+console.log(test);
+
+window.addEventListener(
+  "load",
+  test.map(
+    (element) => new CreateCard(document.querySelector(".main"), element)
+  )
+);

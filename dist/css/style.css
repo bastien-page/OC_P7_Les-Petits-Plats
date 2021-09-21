@@ -37,6 +37,56 @@ body {
   padding: 0.8rem;
 }
 
+.card {
+  display: grid;
+  grid-template-columns: 90px 90px 60px 120px;
+  grid-template-rows: 178px 62px 124px;
+  grid-template-areas: "header header header header" "title title title time" "list list description description";
+  border-radius: 5px;
+}
+.card__header {
+  grid-area: header;
+  background-color: #c7bebe;
+  border-radius: 5px 5px 0 0;
+}
+.card__content__title {
+  grid-area: title;
+  background-color: #e7e7e7;
+  padding: 1rem 0 0 1rem;
+}
+.card__content__time {
+  grid-area: time;
+  text-align: end;
+  font-weight: 700;
+  background-color: #e7e7e7;
+  padding: 1rem;
+}
+.card__content__time em {
+  padding-right: 0.3rem;
+  font-size: 1.1rem;
+}
+.card__content__list {
+  grid-area: list;
+  background-color: #e7e7e7;
+  padding: 0 0 0 1rem;
+  border-radius: 0 0 0 5px;
+}
+.card__content__ingredient {
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+.card__content__qty {
+  font-size: 0.6rem;
+}
+.card__content__description {
+  grid-area: description;
+  background-color: #e7e7e7;
+  font-size: 0.6rem;
+  padding: 0 1rem 0 0;
+  border-radius: 0 0 5px 0;
+  overflow-y: auto;
+}
+
 header {
   display: flex;
   flex-direction: column;
@@ -94,6 +144,27 @@ header img {
   color: white;
 }
 
+.main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+  justify-items: center;
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .main {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+}
+@media screen and (max-width: 850px) {
+  .main {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
 body {
   display: flex;
   flex-direction: column;
