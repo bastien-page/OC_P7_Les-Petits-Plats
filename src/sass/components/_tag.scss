@@ -1,0 +1,15 @@
+.tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 1rem 1rem 0;
+  background-color: $colorprimary;
+  border-radius: 5px;
+  color: white;
+  &__text {
+    padding: 0 1.5rem;
+  }
+  &__icon {
+    padding: 0.8rem;
+  }
+}
