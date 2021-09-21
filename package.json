@@ -1,0 +1,27 @@
+{
+  "name": "bastienguillaumont_7_21092021",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch ./src/sass/main.scss:./dist/style/css/style.css",
+    "prod": "webpack --mode=production",
+    "dev": "webpack --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bab2a2s/BastienGuillaumont_7_21092021.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bab2a2s/BastienGuillaumont_7_21092021/issues"
+  },
+  "homepage": "https://github.com/Bab2a2s/BastienGuillaumont_7_21092021#readme",
+  "devDependencies": {
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
+  }
+}
