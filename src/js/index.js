@@ -1,6 +1,5 @@
 import CreateTag from "./CreateTag";
 import CreateCard from "./CreateCard";
-
 import { recipes } from "./recipes";
 
 // Ajout des tags
@@ -13,14 +12,42 @@ testTag.forEach((tag) => {
   });
 });
 
-// TEST DES CARD
+// TEST ALGO
 
-let test = [recipes[0], recipes[1], recipes[2]];
-console.log(test);
+// On recupère la saisie de l'utilisateur
 
-window.addEventListener(
-  "load",
-  test.map(
-    (element) => new CreateCard(document.querySelector(".main"), element)
-  )
-);
+const inputSearch = document.getElementById("search");
+let total = [];
+
+inputSearch.addEventListener("keyup", () => {
+  total = []; // On vide le tableau
+  if (inputSearch.value.length >= 3) {
+    recipes.filter((element) => {
+      if (
+        element.name.toLowerCase().includes(inputSearch.value.toLowerCase()) ||
+        element.description
+          .toLowerCase()
+          .includes(inputSearch.value.toLowerCase()) ||
+        element.ingredients.forEach((element) => {
+          let ing = element.ingredient;
+          if (ing.toLowerCase().includes(inputSearch.value.toLowerCase()))
+            return true;
+        }) == true
+      ) {
+        total.push(element);
+      }
+    });
+  }
+  console.log(total);
+  if (total.length == 0) {
+    document.querySelector(".main").innerHTML = "";
+  } else if (total.length > 0) {
+    total.map(
+      (element) => new CreateCard(document.querySelector(".main"), element)
+    );
+  }
+});
+
+// result.map(
+//   (element) => new CreateCard(document.querySelector(".main"), element)
+// );

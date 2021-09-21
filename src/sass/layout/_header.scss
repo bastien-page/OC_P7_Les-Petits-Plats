@@ -17,14 +17,16 @@ header {
     background-color: $colorsearch;
     border: $colorsearch;
     border-radius: 5px 0px 0px 5px;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     width: 100%;
+    font-family: "Lato";
+    font-size: 1rem;
   }
   &__btn {
     background-color: $colorsearch;
     border: $colorsearch;
     border-radius: 0px 5px 5px 0px;
-    padding: 1rem;
+    padding: 1.5rem;
   }
 }
 
@@ -46,7 +48,7 @@ header {
   border-radius: 5px;
   &__input {
     background-color: inherit;
-    padding: 0.5rem;
+    padding: 1rem;
     border: none;
     color: white;
   }

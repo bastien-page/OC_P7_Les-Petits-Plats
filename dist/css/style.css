@@ -107,14 +107,16 @@ header img {
   background-color: #e7e7e7;
   border: #e7e7e7;
   border-radius: 5px 0px 0px 5px;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   width: 100%;
+  font-family: "Lato";
+  font-size: 1rem;
 }
 .search__btn {
   background-color: #e7e7e7;
   border: #e7e7e7;
   border-radius: 0px 5px 5px 0px;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .tags {
@@ -136,7 +138,7 @@ header img {
 }
 .dropdown__input {
   background-color: inherit;
-  padding: 0.5rem;
+  padding: 1rem;
   border: none;
   color: white;
 }
@@ -191,6 +193,8 @@ input::-ms-input-placeholder {
 
 input::placeholder {
   color: inherit;
+  font-size: 1rem;
+  font-family: "Lato";
 }
 
 /*# sourceMappingURL=style.css.map */

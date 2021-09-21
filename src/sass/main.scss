@@ -1,9 +1,9 @@
 // Import Utils
-@import "../sass/utils/variables";
+@import "./utils/variables";
 
 // Import Base
-@import "../sass/base/base";
-@import "../sass/base/typography";
+@import "./base/base";
+@import "./base/typography";
 
 // Import Components
 @import "./components/tag";
