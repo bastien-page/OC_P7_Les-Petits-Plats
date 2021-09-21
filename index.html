@@ -4,7 +4,63 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Import Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Import Icons -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+
+    <!-- Import Style  -->
+    <link rel="stylesheet" href="./dist/css/style.css" />
     <title>Les Petits Plats</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <!-- SECTION IMG -->
+      <a href="index.html">
+        <img src="./src/media/logo.png" alt="Page d'accueil" />
+      </a>
+
+      <!-- SECTION SEARCH -->
+      <div class="search">
+        <input
+          type="search"
+          class="search__input"
+          placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
+          aria-label="Rechercher un ingrédient, appareil, ustensiles ou une recette"
+          id="search"
+        />
+        <em class="search__btn fas fa-search"></em>
+      </div>
+
+      <!-- SECTION TAGS -->
+      <div class="tags"></div>
+
+      <!-- SECTION DROPDOWN -->
+
+      <div class="dropdowns">
+        <div class="dropdown">
+          <input
+            class="dropdown__input"
+            type="search"
+            placeholder="Ingrédients"
+          />
+          <em class="dropdown__icon down fas fa-chevron-down"></em>
+          <em class="dropdown__icon up fas fa-chevron-up"></em>
+        </div>
+      </div>
+    </header>
+  </body>
 </html>
