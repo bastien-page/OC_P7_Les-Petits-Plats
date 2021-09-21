@@ -1,0 +1,56 @@
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+  img {
+    width: 280px;
+  }
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  width: 100%;
+  &__input {
+    background-color: $colorsearch;
+    border: $colorsearch;
+    border-radius: 5px 0px 0px 5px;
+    padding: 1rem;
+    width: 100%;
+  }
+  &__btn {
+    background-color: $colorsearch;
+    border: $colorsearch;
+    border-radius: 0px 5px 5px 0px;
+    padding: 1rem;
+  }
+}
+
+.tags {
+  display: flex;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.dropdowns {
+  display: flex;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.dropdown {
+  background-color: $colorprimary;
+  padding: 0.5rem;
+  border-radius: 5px;
+  &__input {
+    background-color: inherit;
+    padding: 0.5rem;
+    border: none;
+    color: white;
+  }
+  &__icon {
+    color: white;
+  }
+}
