@@ -12,8 +12,6 @@ testTag.forEach((tag) => {
   });
 });
 
-// TEST ALGO
-
 // On recupère la saisie de l'utilisateur
 
 const inputSearch = document.getElementById("search");
@@ -24,15 +22,16 @@ inputSearch.addEventListener("keyup", () => {
   if (inputSearch.value.length >= 3) {
     recipes.filter((element) => {
       if (
-        element.name.toLowerCase().includes(inputSearch.value.toLowerCase()) ||
-        element.description
+        // On cherche si l'input est inclus dans les appareils
+        element.appliance
           .toLowerCase()
           .includes(inputSearch.value.toLowerCase()) ||
-        element.ingredients.forEach((element) => {
-          let ing = element.ingredient;
-          if (ing.toLowerCase().includes(inputSearch.value.toLowerCase()))
-            return true;
-        }) == true
+        // On cherche si l'input est inlcus dans le nom de la recette
+        element.name.toLowerCase().includes(inputSearch.value.toLowerCase()) ||
+        // On cherche si l'input est inlcus dans la description de la recette
+        element.description
+          .toLowerCase()
+          .includes(inputSearch.value.toLowerCase())
       ) {
         total.push(element);
       }
@@ -48,6 +47,8 @@ inputSearch.addEventListener("keyup", () => {
   }
 });
 
-// result.map(
-//   (element) => new CreateCard(document.querySelector(".main"), element)
-// );
+// element.ingredients.forEach((element) => {
+//   let ing = element.ingredient;
+//   if (ing.toLowerCase().includes(inputSearch.value.toLowerCase()))
+//     return true;
+// }) == true

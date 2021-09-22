@@ -41,18 +41,3 @@ header {
   width: 100%;
   margin-top: 3rem;
 }
-
-.dropdown {
-  background-color: $colorprimary;
-  padding: 0.5rem;
-  border-radius: 5px;
-  &__input {
-    background-color: inherit;
-    padding: 1rem;
-    border: none;
-    color: white;
-  }
-  &__icon {
-    color: white;
-  }
-}
