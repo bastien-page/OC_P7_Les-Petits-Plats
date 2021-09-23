@@ -2,25 +2,52 @@ import CreateTag from "./CreateTag";
 import CreateCard from "./CreateCard";
 import { recipes } from "./recipes";
 
-// On recupère tous les éléments pour les afficher dans les dropdowns
 let appareilsTotal = [];
 let ustensilsTotal = [];
 let ingredientsTotal = [];
-recipes.forEach((element) => {
-  if (!appareilsTotal.includes(element.appliance.toLowerCase())) {
-    appareilsTotal.push(element.appliance.toLowerCase());
-  }
-  element.ustensils.forEach((ustensil) => {
-    if (!ustensilsTotal.includes(ustensil.toLowerCase())) {
-      ustensilsTotal.push(ustensil.toLowerCase());
+
+// Fonction pour récuperer la liste des appareils avec un tableau en entrée
+function pushAppareil(array) {
+  array.forEach((element) => {
+    if (!appareilsTotal.includes(element.appliance.toLowerCase())) {
+      appareilsTotal.push(element.appliance.toLowerCase());
     }
   });
-  element.ingredients.forEach((ingredient) => {
-    if (!ingredientsTotal.includes(ingredient.ingredient.toLowerCase())) {
-      ingredientsTotal.push(ingredient.ingredient.toLowerCase());
-    }
+  console.log(appareilsTotal);
+  return appareilsTotal;
+}
+
+pushAppareil(recipes);
+
+// Fonction pour récuperer la liste des ustensils avec un tableau en entrée
+function pushUstensil(array) {
+  array.forEach((element) => {
+    element.ustensils.forEach((ustensil) => {
+      if (!ustensilsTotal.includes(ustensil.toLowerCase())) {
+        ustensilsTotal.push(ustensil.toLowerCase());
+      }
+    });
   });
-});
+  console.log(ustensilsTotal);
+  return ustensilsTotal;
+}
+
+pushUstensil(recipes);
+
+// Fonction pour récuperer la liste des ingredients avec un tableau en entrée
+function pushIngredient(array) {
+  array.forEach((element) => {
+    element.ingredients.forEach((ingredient) => {
+      if (!ingredientsTotal.includes(ingredient.ingredient.toLowerCase())) {
+        ingredientsTotal.push(ingredient.ingredient.toLowerCase());
+      }
+    });
+  });
+  console.log(ingredientsTotal);
+  return ingredientsTotal;
+}
+
+pushIngredient(recipes);
 
 // On recupère la saisie de l'utilisateur
 
@@ -54,6 +81,10 @@ inputSearch.addEventListener("keyup", () => {
     total.map(
       (element) => new CreateCard(document.querySelector(".main"), element)
     );
+    dropdownAppareil.innerHTML = ""; // On vide la l'element html
+    addElementInDropdown(dropdownAppareil, pushAppareil(total));
+    dropdownIngredient.innerHTML = ""; // On vide la l'element h
+    addElementInDropdown(dropdownIngredient, pushIngredient(total));
   }
 });
 
@@ -81,8 +112,8 @@ function addElementInDropdown(selector, array) {
 }
 
 addElementInDropdown(dropdownUstensil, ustensilsTotal);
-//addElementInDropdown(dropdownAppareil, appareilsTotal);
-//addElementInDropdown(dropdownIngredient, ingredientsTotal);
+addElementInDropdown(dropdownAppareil, appareilsTotal);
+addElementInDropdown(dropdownIngredient, ingredientsTotal);
 
 // Ajout des tags
 const testTag = document.querySelectorAll(".dropdown__list__item"); // A modifier avec les bons inputs
@@ -93,24 +124,45 @@ testTag.forEach((tag) => {
   });
 });
 
-const iconDown = document.querySelectorAll(".down");
-
+// Selecteur des inputs dans les menus dropdown
 const inputUstensils = document.querySelector(
   "input[placeholder='Ustensiles']"
 );
+const inputAppareils = document.querySelector("input[placeholder='Appareils']");
+const inputIngredients = document.querySelector(
+  "input[placeholder='Ingrédients']"
+);
 
+// Les events liés aux inputs dropdown
 inputUstensils.addEventListener("keyup", () => {
-  let ustensil = [];
-  if (inputUstensils.value.length >= 3) {
-    dropdownUstensil.innerHTML = ""; // On vide la l'element html
-    ustensilsTotal.forEach((element) => {
-      if (element.includes(inputUstensils.value.toLowerCase())) {
-        ustensil.push(element);
+  dropdown(ustensilsTotal, dropdownUstensil, inputUstensils);
+});
+inputAppareils.addEventListener("keyup", () => {
+  dropdown(appareilsTotal, dropdownAppareil, inputAppareils);
+});
+inputIngredients.addEventListener("keyup", () => {
+  dropdown(ingredientsTotal, dropdownIngredient, inputIngredients);
+});
+
+/**
+ *Fonction pour l'affichage des elements dans le dropdown
+ * @param {Tableau à filter} array
+ * @param {HTMLElement} element
+ * @param {Input} input
+ */
+
+function dropdown(array, element, input) {
+  let filter = [];
+  if (input.value.length >= 3) {
+    element.innerHTML = ""; // On vide la l'element html
+    array.forEach((element) => {
+      if (element.includes(input.value.toLowerCase())) {
+        filter.push(element);
       }
     });
-  } else if (inputUstensils.value.length < 3) {
-    dropdownUstensil.innerHTML = ""; // On vide la l'element html
-    addElementInDropdown(dropdownUstensil, ustensilsTotal); // On affiche les eléments du départ
+  } else if (input.value.length < 3) {
+    element.innerHTML = ""; // On vide la l'element html
+    addElementInDropdown(element, array); // On affiche les eléments du départ
   }
-  addElementInDropdown(dropdownUstensil, ustensil); // On affiche les éléments correspond à l'entrée utilisateur
-});
+  addElementInDropdown(element, filter); // On affiche les éléments correspond à l'entrée utilisateur
+}
