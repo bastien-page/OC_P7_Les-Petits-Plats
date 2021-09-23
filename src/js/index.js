@@ -2,52 +2,69 @@ import CreateTag from "./CreateTag";
 import CreateCard from "./CreateCard";
 import { recipes } from "./recipes";
 
-let appareilsTotal = [];
-let ustensilsTotal = [];
-let ingredientsTotal = [];
+// Affichage des inputs au départ
+window.addEventListener("load", () => {
+  showDropdownMenu(recipes);
+});
+
+// On affiche les items dans les menus
+function addElementInDropdown(selector, array) {
+  for (let i = 0; i < array.length; i++) {
+    const elementAdd = document.createElement("p");
+    elementAdd.setAttribute("class", "dropdown__list__item");
+    selector.appendChild(elementAdd);
+    let elementValue = array[i];
+    elementAdd.innerText =
+      elementValue.slice(0, 1).toUpperCase() + elementValue.slice(1); //Permet de mettre la première lettre en Maj
+  }
+}
+
+// Gere l'affichage des items dans les dropdowns
+function showDropdownMenu(array) {
+  dropdownAppareil.innerHTML = ""; // On vide la l'element html
+  addElementInDropdown(dropdownAppareil, pushAppareil(array));
+  dropdownIngredient.innerHTML = ""; // On vide la l'element html
+  addElementInDropdown(dropdownIngredient, pushIngredient(array));
+  dropdownUstensil.innerHTML = ""; // On vide la l'element html
+  addElementInDropdown(dropdownUstensil, pushUstensil(array).slice(0, 30));
+}
 
 // Fonction pour récuperer la liste des appareils avec un tableau en entrée
 function pushAppareil(array) {
+  let item = [];
   array.forEach((element) => {
-    if (!appareilsTotal.includes(element.appliance.toLowerCase())) {
-      appareilsTotal.push(element.appliance.toLowerCase());
+    if (!item.includes(element.appliance.toLowerCase())) {
+      item.push(element.appliance.toLowerCase());
     }
   });
-  console.log(appareilsTotal);
-  return appareilsTotal;
+  return item;
 }
-
-pushAppareil(recipes);
 
 // Fonction pour récuperer la liste des ustensils avec un tableau en entrée
 function pushUstensil(array) {
+  let item = [];
   array.forEach((element) => {
     element.ustensils.forEach((ustensil) => {
-      if (!ustensilsTotal.includes(ustensil.toLowerCase())) {
-        ustensilsTotal.push(ustensil.toLowerCase());
+      if (!item.includes(ustensil.toLowerCase())) {
+        item.push(ustensil.toLowerCase());
       }
     });
   });
-  console.log(ustensilsTotal);
-  return ustensilsTotal;
+  return item;
 }
-
-pushUstensil(recipes);
 
 // Fonction pour récuperer la liste des ingredients avec un tableau en entrée
 function pushIngredient(array) {
+  let item = [];
   array.forEach((element) => {
     element.ingredients.forEach((ingredient) => {
-      if (!ingredientsTotal.includes(ingredient.ingredient.toLowerCase())) {
-        ingredientsTotal.push(ingredient.ingredient.toLowerCase());
+      if (!item.includes(ingredient.ingredient.toLowerCase())) {
+        item.push(ingredient.ingredient.toLowerCase());
       }
     });
   });
-  console.log(ingredientsTotal);
-  return ingredientsTotal;
+  return item;
 }
-
-pushIngredient(recipes);
 
 // On recupère la saisie de l'utilisateur
 
@@ -76,44 +93,21 @@ inputSearch.addEventListener("keyup", () => {
   }
   console.log(total);
   if (total.length == 0) {
+    showDropdownMenu(recipes);
     document.querySelector(".main").innerHTML = "";
   } else if (total.length > 0) {
+    showDropdownMenu(total);
     total.map(
       (element) => new CreateCard(document.querySelector(".main"), element)
     );
-    dropdownAppareil.innerHTML = ""; // On vide la l'element html
-    addElementInDropdown(dropdownAppareil, pushAppareil(total));
-    dropdownIngredient.innerHTML = ""; // On vide la l'element h
-    addElementInDropdown(dropdownIngredient, pushIngredient(total));
   }
 });
-
-// element.ingredients.forEach((element) => {
-//   let ing = element.ingredient;
-//   if (ing.toLowerCase().includes(inputSearch.value.toLowerCase()))
-//     return true;
-// }) == true
 
 /// Dropdown
 
 const dropdownUstensil = document.getElementById("dropdownUstensil");
 const dropdownAppareil = document.getElementById("dropdownAppareil");
 const dropdownIngredient = document.getElementById("dropdownIngredient");
-
-function addElementInDropdown(selector, array) {
-  for (let i = 0; i < array.length; i++) {
-    const elementAdd = document.createElement("p");
-    elementAdd.setAttribute("class", "dropdown__list__item");
-    selector.appendChild(elementAdd);
-    let elementValue = array[i];
-    elementAdd.innerText =
-      elementValue.slice(0, 1).toUpperCase() + elementValue.slice(1); //Permet de mettre la première lettre en Maj
-  }
-}
-
-addElementInDropdown(dropdownUstensil, ustensilsTotal);
-addElementInDropdown(dropdownAppareil, appareilsTotal);
-addElementInDropdown(dropdownIngredient, ingredientsTotal);
 
 // Ajout des tags
 const testTag = document.querySelectorAll(".dropdown__list__item"); // A modifier avec les bons inputs
@@ -145,12 +139,11 @@ inputIngredients.addEventListener("keyup", () => {
 });
 
 /**
- *Fonction pour l'affichage des elements dans le dropdown
+ *Fonction pour l'affichage des elements dans le dropdown suite à la recherche dans l'input
  * @param {Tableau à filter} array
  * @param {HTMLElement} element
  * @param {Input} input
  */
-
 function dropdown(array, element, input) {
   let filter = [];
   if (input.value.length >= 3) {
@@ -166,3 +159,24 @@ function dropdown(array, element, input) {
   }
   addElementInDropdown(element, filter); // On affiche les éléments correspond à l'entrée utilisateur
 }
+
+const iconsDropdownDown = document.querySelectorAll(".dropdown__icon.down");
+const iconsDropdownUp = document.querySelectorAll(".dropdown__icon.up");
+
+iconsDropdownDown.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    icon.parentElement.style.height = "auto";
+    icon.nextElementSibling.nextElementSibling.style.width = "auto";
+    icon.style.display = "none";
+    icon.nextElementSibling.style.display = "initial";
+  });
+});
+
+iconsDropdownUp.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    icon.parentElement.parentElement.style.height = "60px";
+    icon.nextElementSibling.style.width = "120px";
+    icon.style.display = "none";
+    icon.previousElementSibling.style.display = "initial";
+  });
+});
