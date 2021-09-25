@@ -27,6 +27,14 @@ function showDropdownMenu(array) {
   addElementInDropdown(dropdownIngredient, pushIngredient(array));
   dropdownUstensil.innerHTML = ""; // On vide la l'element html
   addElementInDropdown(dropdownUstensil, pushUstensil(array).slice(0, 30));
+
+  // Ajout des tags au click
+  const tags = document.querySelectorAll(".dropdown__list__item");
+  tags.forEach((tag) => {
+    tag.addEventListener("click", () => {
+      new CreateTag(document.querySelector(".tags"), tag.textContent);
+    });
+  });
 }
 
 // Fonction pour récuperer la liste des appareils avec un tableau en entrée
@@ -109,15 +117,6 @@ const dropdownUstensil = document.getElementById("dropdownUstensil");
 const dropdownAppareil = document.getElementById("dropdownAppareil");
 const dropdownIngredient = document.getElementById("dropdownIngredient");
 
-// Ajout des tags
-const testTag = document.querySelectorAll(".dropdown__list__item"); // A modifier avec les bons inputs
-
-testTag.forEach((tag) => {
-  tag.addEventListener("click", () => {
-    new CreateTag(document.querySelector(".tags"), tag.textContent);
-  });
-});
-
 // Selecteur des inputs dans les menus dropdown
 const inputUstensils = document.querySelector(
   "input[placeholder='Ustensiles']"
@@ -129,13 +128,13 @@ const inputIngredients = document.querySelector(
 
 // Les events liés aux inputs dropdown
 inputUstensils.addEventListener("keyup", () => {
-  dropdown(ustensilsTotal, dropdownUstensil, inputUstensils);
+  dropdown(pushUstensil(recipes), dropdownUstensil, inputUstensils);
 });
 inputAppareils.addEventListener("keyup", () => {
-  dropdown(appareilsTotal, dropdownAppareil, inputAppareils);
+  dropdown(pushAppareil(recipes), dropdownAppareil, inputAppareils);
 });
 inputIngredients.addEventListener("keyup", () => {
-  dropdown(ingredientsTotal, dropdownIngredient, inputIngredients);
+  dropdown(pushIngredient(recipes), dropdownIngredient, inputIngredients);
 });
 
 /**
@@ -169,12 +168,13 @@ iconsDropdownDown.forEach((icon) => {
     icon.nextElementSibling.nextElementSibling.style.width = "auto";
     icon.style.display = "none";
     icon.nextElementSibling.style.display = "initial";
+    createTag();
   });
 });
 
 iconsDropdownUp.forEach((icon) => {
   icon.addEventListener("click", () => {
-    icon.parentElement.parentElement.style.height = "60px";
+    icon.parentElement.style.height = "60px";
     icon.nextElementSibling.style.width = "120px";
     icon.style.display = "none";
     icon.previousElementSibling.style.display = "initial";
