@@ -31,7 +31,7 @@ function showDropdownMenu(array) {
   dropdownUstensil.innerHTML = ""; // On vide la l'element html
   addElementInDropdown(dropdownUstensil, pushUstensil(array).slice(0, 30));
 
-  // Ajout des tags au click
+  // Fonction sur les tags
   const tags = document.querySelectorAll(".dropdown__list__item");
   tags.forEach((tag) => {
     tag.addEventListener("click", () => {
@@ -40,6 +40,28 @@ function showDropdownMenu(array) {
         tag.textContent,
         tag.parentNode
       );
+      const tagsSeleted = document.querySelectorAll(".tag");
+      tagsSeleted.forEach((tag) => {
+        let tableau = [];
+        if (total.length > 0 && tableau.length === 0) {
+          total.filter((element) => {
+            if (
+              element.appliance
+                .toLowerCase()
+                .includes(tag.textContent.toLowerCase()) ||
+              testUstensils(element.ustensils, tag.textContent) === true ||
+              testIngredient(element.ingredients, tag.textContent) === true
+            ) {
+              tableau.push(element);
+            }
+          });
+        }
+        showDropdownMenu(tableau);
+        document.querySelector(".main").innerHTML = "";
+        tableau.map(
+          (element) => new CreateCard(document.querySelector(".main"), element)
+        );
+      });
     });
   });
 }
@@ -49,6 +71,17 @@ function testIngredient(array, string) {
   let resp = null;
   array.forEach((element) => {
     if (element.ingredient.toLowerCase().includes(string.toLowerCase())) {
+      resp = true;
+    }
+  });
+  return resp;
+}
+
+//On test si l'ustensil est présent
+function testUstensils(array, string) {
+  let resp = null;
+  array.forEach((element) => {
+    if (element.toLowerCase().includes(string.toLowerCase())) {
       resp = true;
     }
   });
@@ -88,6 +121,7 @@ inputSearch.addEventListener("keyup", () => {
     document.querySelector(".main").innerHTML = "";
   } else if (total.length > 0) {
     showDropdownMenu(total);
+    document.querySelector(".main").innerHTML = "";
     total.map(
       (element) => new CreateCard(document.querySelector(".main"), element)
     );
