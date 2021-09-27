@@ -197,6 +197,7 @@ header img {
   width: 100%;
   justify-items: center;
   margin-top: 3rem;
+  margin-bottom: 5rem;
 }
 
 @media screen and (max-width: 1200px) {

@@ -5,6 +5,8 @@ import { pushAppareil } from "./pushElement";
 import { pushIngredient } from "./pushElement";
 import { pushUstensil } from "./pushElement";
 
+const tableau2 = [];
+
 // Affichage des inputs au départ
 window.addEventListener("load", () => {
   showDropdownMenu(recipes);
@@ -55,6 +57,18 @@ function showDropdownMenu(array) {
               tableau.push(element);
             }
           });
+        } else if (total.length === 0) {
+          recipes.filter((element) => {
+            if (
+              element.appliance
+                .toLowerCase()
+                .includes(tag.textContent.toLowerCase()) ||
+              testUstensils(element.ustensils, tag.textContent) === true ||
+              testIngredient(element.ingredients, tag.textContent) === true
+            ) {
+              tableau2.push(element);
+            }
+          });
         }
         showDropdownMenu(tableau);
         document.querySelector(".main").innerHTML = "";
@@ -95,8 +109,27 @@ let total = [];
 
 inputSearch.addEventListener("keyup", () => {
   total = []; // On vide le tableau
-  if (inputSearch.value.length >= 3) {
+  if (inputSearch.value.length >= 3 && tableau2.length === 0) {
     recipes.filter((element) => {
+      if (
+        // On cherche si l'input est inclus dans les appareils
+        element.appliance
+          .toLowerCase()
+          .includes(inputSearch.value.toLowerCase()) ||
+        // On cherche si l'input est inclus dans le nom de la recette
+        element.name.toLowerCase().includes(inputSearch.value.toLowerCase()) ||
+        // On cherche si l'input est inclus dans la description de la recette
+        element.description
+          .toLowerCase()
+          .includes(inputSearch.value.toLowerCase()) ||
+        // On cherche si l'input est inclus dans les ingrédients
+        testIngredient(element.ingredients, inputSearch.value) === true
+      ) {
+        total.push(element);
+      }
+    });
+  } else if (tableau2.length > 0 && inputSearch.value.length >= 3) {
+    tableau2.filter((element) => {
       if (
         // On cherche si l'input est inclus dans les appareils
         element.appliance
