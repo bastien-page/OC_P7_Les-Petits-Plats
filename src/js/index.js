@@ -1,13 +1,16 @@
 import CreateTag from "./CreateTag";
 import CreateCard from "./CreateCard";
 import { recipes } from "./recipes";
+import { pushAppareil } from "./pushElement";
+import { pushIngredient } from "./pushElement";
+import { pushUstensil } from "./pushElement";
 
 // Affichage des inputs au départ
 window.addEventListener("load", () => {
   showDropdownMenu(recipes);
 });
 
-// On affiche les items dans les menus
+// On affiche les items dans les dropdowns
 function addElementInDropdown(selector, array) {
   for (let i = 0; i < array.length; i++) {
     const elementAdd = document.createElement("p");
@@ -32,46 +35,24 @@ function showDropdownMenu(array) {
   const tags = document.querySelectorAll(".dropdown__list__item");
   tags.forEach((tag) => {
     tag.addEventListener("click", () => {
-      new CreateTag(document.querySelector(".tags"), tag.textContent);
+      new CreateTag(
+        document.querySelector(".tags"),
+        tag.textContent,
+        tag.parentNode
+      );
     });
   });
 }
 
-// Fonction pour récuperer la liste des appareils avec un tableau en entrée
-function pushAppareil(array) {
-  let item = [];
+// On test si l'ingredient est présent
+function testIngredient(array, string) {
+  let resp = null;
   array.forEach((element) => {
-    if (!item.includes(element.appliance.toLowerCase())) {
-      item.push(element.appliance.toLowerCase());
+    if (element.ingredient.toLowerCase().includes(string.toLowerCase())) {
+      resp = true;
     }
   });
-  return item;
-}
-
-// Fonction pour récuperer la liste des ustensils avec un tableau en entrée
-function pushUstensil(array) {
-  let item = [];
-  array.forEach((element) => {
-    element.ustensils.forEach((ustensil) => {
-      if (!item.includes(ustensil.toLowerCase())) {
-        item.push(ustensil.toLowerCase());
-      }
-    });
-  });
-  return item;
-}
-
-// Fonction pour récuperer la liste des ingredients avec un tableau en entrée
-function pushIngredient(array) {
-  let item = [];
-  array.forEach((element) => {
-    element.ingredients.forEach((ingredient) => {
-      if (!item.includes(ingredient.ingredient.toLowerCase())) {
-        item.push(ingredient.ingredient.toLowerCase());
-      }
-    });
-  });
-  return item;
+  return resp;
 }
 
 // On recupère la saisie de l'utilisateur
@@ -88,12 +69,14 @@ inputSearch.addEventListener("keyup", () => {
         element.appliance
           .toLowerCase()
           .includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inlcus dans le nom de la recette
+        // On cherche si l'input est inclus dans le nom de la recette
         element.name.toLowerCase().includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inlcus dans la description de la recette
+        // On cherche si l'input est inclus dans la description de la recette
         element.description
           .toLowerCase()
-          .includes(inputSearch.value.toLowerCase())
+          .includes(inputSearch.value.toLowerCase()) ||
+        // On cherche si l'input est inclus dans les ingrédients
+        testIngredient(element.ingredients, inputSearch.value) === true
       ) {
         total.push(element);
       }
@@ -159,6 +142,7 @@ function dropdown(array, element, input) {
   addElementInDropdown(element, filter); // On affiche les éléments correspond à l'entrée utilisateur
 }
 
+// Event pour les dropdowns
 const iconsDropdownDown = document.querySelectorAll(".dropdown__icon.down");
 const iconsDropdownUp = document.querySelectorAll(".dropdown__icon.up");
 
@@ -168,7 +152,6 @@ iconsDropdownDown.forEach((icon) => {
     icon.nextElementSibling.nextElementSibling.style.width = "auto";
     icon.style.display = "none";
     icon.nextElementSibling.style.display = "initial";
-    createTag();
   });
 });
 
