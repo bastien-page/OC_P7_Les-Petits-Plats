@@ -30,7 +30,6 @@ export default class CreateTag {
     } else if (this.elementParent.id === "dropdownUstensil") {
       tag.classList.add("ustensil");
     }
-
     return tag;
   }
 
