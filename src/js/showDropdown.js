@@ -1,12 +1,9 @@
-import CreateTag from "./CreateTag";
-
 /**
  * ON AJOUTE LES ITEMS DANS LES DROPDOWNS SUIVANT LE TABLEAU DE RECETTE
  * @param {array} array -tableau de recette
  */
 export const showDropdownItems = (array) => {
   addItemInDropdown(recupItem(array));
-  addTag();
 };
 
 /**
@@ -58,13 +55,13 @@ function addItemInDropdown(obj) {
   dropdownUstensil.innerHTML = "";
   dropdownAppareil.innerHTML = "";
 
-  obj.appareils.forEach((appareil) => {
+  obj.appareils.slice(0, 30).forEach((appareil) => {
     createElement(appareil, dropdownAppareil);
   });
-  obj.ustensils.forEach((ustensil) => {
+  obj.ustensils.slice(0, 30).forEach((ustensil) => {
     createElement(ustensil, dropdownUstensil);
   });
-  obj.ingredients.forEach((ingredient) => {
+  obj.ingredients.slice(0, 30).forEach((ingredient) => {
     createElement(ingredient, dropdownIngredient);
   });
 }
@@ -79,14 +76,4 @@ function createElement(item, selector) {
   addItem.classList.add("dropdown__list__item");
   addItem.innerText = item.slice(0, 1).toUpperCase() + item.slice(1); //Permet de mettre la première lettre en Maj
   selector.appendChild(addItem);
-}
-
-function addTag() {
-  const tagBox = document.querySelector(".tags");
-  const items = document.querySelectorAll(".dropdown__list__item");
-  items.forEach((item) => {
-    item.addEventListener("click", () => {
-      new CreateTag(tagBox, item.textContent, item.parentNode);
-    });
-  });
 }

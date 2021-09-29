@@ -14,32 +14,24 @@ const main = document.querySelector(".main");
 const iconsDropdownDown = document.querySelectorAll(".dropdown__icon.down");
 const iconsDropdownUp = document.querySelectorAll(".dropdown__icon.up");
 let recipesFiltered = new Array();
-let recipesFilteredByTag = new Array();
 
 // AFFICHAGE DE LA PAGE
 window.addEventListener("load", () => {
   showDropdownItems(recipes);
+  addTag(recipes);
 });
 
 // SAISI DANS L'INPUT SEARCH
-inputSearch.addEventListener("keyup", () => {
+inputSearch.addEventListener("input", () => {
   if (inputSearch.value.length >= 3) {
-    filterRecipeWithInput(recipes, inputSearch, recipesFiltered);
-
+    recipesToShow(filterRecipeWithInput(recipes, inputSearch));
     console.log(recipesFiltered);
   } else {
     recipesFiltered = [];
-  }
-  if (recipesFiltered.length != 0) {
-    main.innerHTML = "";
-    showDropdownItems(recipesFiltered);
-    recipesFiltered.map((recipe) => {
-      new CreateCard(main, recipe);
-    });
-  } else {
     showDropdownItems(recipes);
     main.innerHTML = "";
   }
+  addTag(recipesFiltered);
 });
 
 // EVENT POUR L'AFFICHAGE DES DROPDOWNS
@@ -60,6 +52,35 @@ iconsDropdownUp.forEach((icon) => {
     icon.previousElementSibling.style.display = "initial";
   });
 });
+
+/**
+ * ON AJOUTE LES TAGS SUIVANT LE CLICK
+ */
+function addTag(array) {
+  const tagBox = document.querySelector(".tags");
+  const items = document.querySelectorAll(".dropdown__list__item");
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      new CreateTag(tagBox, item.textContent, item.parentNode);
+      recipesToShow(filterRecipeWithTag(array, item.textContent));
+      addTag(recipesFiltered);
+    });
+  });
+}
+
+/**
+ * ON VIDE LE MAIN, ON AFFICHE LES CARDS ET LES DROPDOWNS
+ * @param {array} array -Tableau filtré à afficher
+ */
+function recipesToShow(array) {
+  recipesFiltered = array;
+  showDropdownItems(recipesFiltered);
+  main.innerHTML = "";
+  recipesFiltered.map((recipe) => {
+    new CreateCard(main, recipe);
+  });
+  console.log(recipesFiltered);
+}
 
 /// Dropdown
 
