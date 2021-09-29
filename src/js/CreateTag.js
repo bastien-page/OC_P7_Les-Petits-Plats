@@ -38,7 +38,8 @@ export default class CreateTag {
     const icons = document.querySelectorAll(".tag__icon");
     icons.forEach((icon) => {
       icon.addEventListener("click", () => {
-        icon.parentElement.parentNode.removeChild(icon.parentNode);
+        let tag = icon.parentElement;
+        tag.remove();
       });
     });
   }

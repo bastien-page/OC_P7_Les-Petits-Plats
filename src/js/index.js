@@ -4,161 +4,61 @@ import { recipes } from "./recipes";
 import { pushAppareil } from "./pushElement";
 import { pushIngredient } from "./pushElement";
 import { pushUstensil } from "./pushElement";
+import { filterRecipeWithInput } from "./filterRecipeWithInput";
+import { filterRecipeWithTag } from "./filterRecipeWithTag";
+import { showDropdownItems } from "./showDropdown";
 
-const tableau2 = [];
+// VARIABLES GENERALES
+const inputSearch = document.getElementById("search");
+const main = document.querySelector(".main");
+const iconsDropdownDown = document.querySelectorAll(".dropdown__icon.down");
+const iconsDropdownUp = document.querySelectorAll(".dropdown__icon.up");
+let recipesFiltered = new Array();
+let recipesFilteredByTag = new Array();
 
-// Affichage des inputs au départ
+// AFFICHAGE DE LA PAGE
 window.addEventListener("load", () => {
-  showDropdownMenu(recipes);
+  showDropdownItems(recipes);
 });
 
-// On affiche les items dans les dropdowns
-function addElementInDropdown(selector, array) {
-  for (let i = 0; i < array.length; i++) {
-    const elementAdd = document.createElement("p");
-    elementAdd.setAttribute("class", "dropdown__list__item");
-    selector.appendChild(elementAdd);
-    let elementValue = array[i];
-    elementAdd.innerText =
-      elementValue.slice(0, 1).toUpperCase() + elementValue.slice(1); //Permet de mettre la première lettre en Maj
-  }
-}
-
-// Gere l'affichage des items dans les dropdowns
-function showDropdownMenu(array) {
-  dropdownAppareil.innerHTML = ""; // On vide la l'element html
-  addElementInDropdown(dropdownAppareil, pushAppareil(array));
-  dropdownIngredient.innerHTML = ""; // On vide la l'element html
-  addElementInDropdown(dropdownIngredient, pushIngredient(array));
-  dropdownUstensil.innerHTML = ""; // On vide la l'element html
-  addElementInDropdown(dropdownUstensil, pushUstensil(array).slice(0, 30));
-
-  // Fonction sur les tags
-  const tags = document.querySelectorAll(".dropdown__list__item");
-  tags.forEach((tag) => {
-    tag.addEventListener("click", () => {
-      new CreateTag(
-        document.querySelector(".tags"),
-        tag.textContent,
-        tag.parentNode
-      );
-      const tagsSeleted = document.querySelectorAll(".tag");
-      tagsSeleted.forEach((tag) => {
-        let tableau = [];
-        if (total.length > 0 && tableau.length === 0) {
-          total.filter((element) => {
-            if (
-              element.appliance
-                .toLowerCase()
-                .includes(tag.textContent.toLowerCase()) ||
-              testUstensils(element.ustensils, tag.textContent) === true ||
-              testIngredient(element.ingredients, tag.textContent) === true
-            ) {
-              tableau.push(element);
-            }
-          });
-        } else if (total.length === 0) {
-          recipes.filter((element) => {
-            if (
-              element.appliance
-                .toLowerCase()
-                .includes(tag.textContent.toLowerCase()) ||
-              testUstensils(element.ustensils, tag.textContent) === true ||
-              testIngredient(element.ingredients, tag.textContent) === true
-            ) {
-              tableau2.push(element);
-            }
-          });
-        }
-        showDropdownMenu(tableau);
-        document.querySelector(".main").innerHTML = "";
-        tableau.map(
-          (element) => new CreateCard(document.querySelector(".main"), element)
-        );
-      });
-    });
-  });
-}
-
-// On test si l'ingredient est présent
-function testIngredient(array, string) {
-  let resp = null;
-  array.forEach((element) => {
-    if (element.ingredient.toLowerCase().includes(string.toLowerCase())) {
-      resp = true;
-    }
-  });
-  return resp;
-}
-
-//On test si l'ustensil est présent
-function testUstensils(array, string) {
-  let resp = null;
-  array.forEach((element) => {
-    if (element.toLowerCase().includes(string.toLowerCase())) {
-      resp = true;
-    }
-  });
-  return resp;
-}
-
-// On recupère la saisie de l'utilisateur
-
-const inputSearch = document.getElementById("search");
-let total = [];
-
+// SAISI DANS L'INPUT SEARCH
 inputSearch.addEventListener("keyup", () => {
-  total = []; // On vide le tableau
-  if (inputSearch.value.length >= 3 && tableau2.length === 0) {
-    recipes.filter((element) => {
-      if (
-        // On cherche si l'input est inclus dans les appareils
-        element.appliance
-          .toLowerCase()
-          .includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inclus dans le nom de la recette
-        element.name.toLowerCase().includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inclus dans la description de la recette
-        element.description
-          .toLowerCase()
-          .includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inclus dans les ingrédients
-        testIngredient(element.ingredients, inputSearch.value) === true
-      ) {
-        total.push(element);
-      }
-    });
-  } else if (tableau2.length > 0 && inputSearch.value.length >= 3) {
-    tableau2.filter((element) => {
-      if (
-        // On cherche si l'input est inclus dans les appareils
-        element.appliance
-          .toLowerCase()
-          .includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inclus dans le nom de la recette
-        element.name.toLowerCase().includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inclus dans la description de la recette
-        element.description
-          .toLowerCase()
-          .includes(inputSearch.value.toLowerCase()) ||
-        // On cherche si l'input est inclus dans les ingrédients
-        testIngredient(element.ingredients, inputSearch.value) === true
-      ) {
-        total.push(element);
-      }
-    });
+  if (inputSearch.value.length >= 3) {
+    filterRecipeWithInput(recipes, inputSearch, recipesFiltered);
+
+    console.log(recipesFiltered);
+  } else {
+    recipesFiltered = [];
   }
-  console.log(total);
-  if (total.length == 0) {
-    showDropdownMenu(recipes);
-    document.querySelector(".main").innerHTML = "";
-  } else if (total.length > 0) {
-    showDropdownMenu(total);
-    document.querySelector(".main").innerHTML = "";
-    total.map(
-      (element) => new CreateCard(document.querySelector(".main"), element)
-    );
+  if (recipesFiltered.length != 0) {
+    main.innerHTML = "";
+    showDropdownItems(recipesFiltered);
+    recipesFiltered.map((recipe) => {
+      new CreateCard(main, recipe);
+    });
+  } else {
+    showDropdownItems(recipes);
+    main.innerHTML = "";
   }
+});
+
+// EVENT POUR L'AFFICHAGE DES DROPDOWNS
+iconsDropdownDown.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    icon.parentElement.style.height = "auto";
+    icon.nextElementSibling.nextElementSibling.style.width = "auto";
+    icon.style.display = "none";
+    icon.nextElementSibling.style.display = "initial";
+  });
+});
+
+iconsDropdownUp.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    icon.parentElement.style.height = "60px";
+    icon.nextElementSibling.style.width = "120px";
+    icon.style.display = "none";
+    icon.previousElementSibling.style.display = "initial";
+  });
 });
 
 /// Dropdown
@@ -208,25 +108,3 @@ function dropdown(array, element, input) {
   }
   addElementInDropdown(element, filter); // On affiche les éléments correspond à l'entrée utilisateur
 }
-
-// Event pour les dropdowns
-const iconsDropdownDown = document.querySelectorAll(".dropdown__icon.down");
-const iconsDropdownUp = document.querySelectorAll(".dropdown__icon.up");
-
-iconsDropdownDown.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    icon.parentElement.style.height = "auto";
-    icon.nextElementSibling.nextElementSibling.style.width = "auto";
-    icon.style.display = "none";
-    icon.nextElementSibling.style.display = "initial";
-  });
-});
-
-iconsDropdownUp.forEach((icon) => {
-  icon.addEventListener("click", () => {
-    icon.parentElement.style.height = "60px";
-    icon.nextElementSibling.style.width = "120px";
-    icon.style.display = "none";
-    icon.previousElementSibling.style.display = "initial";
-  });
-});

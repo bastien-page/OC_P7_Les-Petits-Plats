@@ -2,10 +2,11 @@
 export const pushAppareil = (array) => {
   let item = [];
   array.forEach((element) => {
-    if (!item.includes(element.appliance.toLowerCase())) {
-      item.push(element.appliance.toLowerCase());
+    if (!item.includes(element.appliance.toLowerCase().replace(".", ""))) {
+      item.push(element.appliance.toLowerCase().replace(".", ""));
     }
   });
+  item.sort();
   return item;
 };
 
@@ -14,11 +15,12 @@ export const pushUstensil = (array) => {
   let item = [];
   array.forEach((element) => {
     element.ustensils.forEach((ustensil) => {
-      if (!item.includes(ustensil.toLowerCase())) {
-        item.push(ustensil.toLowerCase());
+      if (!item.includes(ustensil.toLowerCase().replace(".", ""))) {
+        item.push(ustensil.toLowerCase().replace(".", ""));
       }
     });
   });
+  item.sort();
   return item;
 };
 
@@ -27,10 +29,13 @@ export const pushIngredient = (array) => {
   let item = [];
   array.forEach((element) => {
     element.ingredients.forEach((ingredient) => {
-      if (!item.includes(ingredient.ingredient.toLowerCase())) {
-        item.push(ingredient.ingredient.toLowerCase());
+      if (
+        !item.includes(ingredient.ingredient.toLowerCase().replace(".", ""))
+      ) {
+        item.push(ingredient.ingredient.toLowerCase().replace(".", ""));
       }
     });
   });
+  item.sort();
   return item;
 };
