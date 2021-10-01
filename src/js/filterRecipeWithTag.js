@@ -7,7 +7,8 @@ import { testIngredient } from "./filterRecipeWithInput";
  * @param {array} arrayfiltered -Tableau contenant les recettes suivant les tags
  * @returns Un tableau de recette filtré
  */
-export const filterRecipeWithTag = (array, filter) => {
+export const filterRecipeWithTag = (array, string) => {
+  let filter = string.toLowerCase();
   let arrayfiltered = new Array();
   array.filter((element) => {
     if (

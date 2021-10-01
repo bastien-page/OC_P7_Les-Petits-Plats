@@ -63,7 +63,20 @@ function addTag(array) {
     item.addEventListener("click", () => {
       new CreateTag(tagBox, item.textContent, item.parentNode);
       recipesToShow(filterRecipeWithTag(array, item.textContent));
-      addTag(recipesFiltered);
+    });
+  });
+}
+
+function deletedTag() {
+  const icons = document.querySelectorAll(".tag__icon");
+  icons.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      let tag = icon.parentElement;
+      tag.remove();
+      const tagsSeleted = Array.from(document.querySelectorAll(".tag"));
+      tagsSeleted.forEach((element) => {
+        console.log(element.innerText);
+      });
     });
   });
 }
@@ -79,7 +92,9 @@ function recipesToShow(array) {
   recipesFiltered.map((recipe) => {
     new CreateCard(main, recipe);
   });
+  addTag(recipesFiltered);
   console.log(recipesFiltered);
+  deletedTag();
 }
 
 /// Dropdown

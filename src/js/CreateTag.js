@@ -4,7 +4,7 @@ export default class CreateTag {
     this.string = string;
     this.elementParent = elementParent;
     this.element = this.buildTag(string);
-    this.deletedTag();
+    //this.deletedTag();
   }
 
   buildTag(string) {
