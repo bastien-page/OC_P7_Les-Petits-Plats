@@ -47,21 +47,21 @@ function recupItem(array) {
  * @param {obj} obj -Object contenu la liste des élements
  */
 function addItemInDropdown(obj) {
-  const dropdownIngredient = document.getElementById("dropdownIngredient");
-  const dropdownUstensil = document.getElementById("dropdownUstensil");
-  const dropdownAppareil = document.getElementById("dropdownAppareil");
+  const dropdownIngredient = document.getElementById("dropdowningredient");
+  const dropdownUstensil = document.getElementById("dropdownustensil");
+  const dropdownAppareil = document.getElementById("dropdownappareil");
 
   dropdownIngredient.innerHTML = "";
   dropdownUstensil.innerHTML = "";
   dropdownAppareil.innerHTML = "";
 
-  obj.appareils.slice(0, 30).forEach((appareil) => {
+  obj.appareils.forEach((appareil) => {
     createElement(appareil, dropdownAppareil);
   });
-  obj.ustensils.slice(0, 30).forEach((ustensil) => {
+  obj.ustensils.forEach((ustensil) => {
     createElement(ustensil, dropdownUstensil);
   });
-  obj.ingredients.slice(0, 30).forEach((ingredient) => {
+  obj.ingredients.forEach((ingredient) => {
     createElement(ingredient, dropdownIngredient);
   });
 }

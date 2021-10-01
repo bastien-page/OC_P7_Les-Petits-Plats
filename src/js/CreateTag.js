@@ -23,11 +23,20 @@ export default class CreateTag {
     this.selector.appendChild(tag);
 
     // On affiche la couleur du tag suivant la catégorie
-    if (this.elementParent.id === "dropdownIngredient") {
+    if (
+      this.elementParent.id === "dropdowningredient" ||
+      this.elementParent.classList.contains("ingredient")
+    ) {
       tag.classList.add("ingredient");
-    } else if (this.elementParent.id === "dropdownAppareil") {
+    } else if (
+      this.elementParent.id === "dropdownappareil" ||
+      this.elementParent.classList.contains("appareil")
+    ) {
       tag.classList.add("appareil");
-    } else if (this.elementParent.id === "dropdownUstensil") {
+    } else if (
+      this.elementParent.id === "dropdownustensil" ||
+      this.elementParent.classList.contains("ustensil")
+    ) {
       tag.classList.add("ustensil");
     }
 

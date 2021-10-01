@@ -41,3 +41,13 @@ header {
   width: 100%;
   margin-top: 3rem;
 }
+
+@media screen and (max-width: 850px) {
+  .tags {
+    margin-top: 1rem;
+  }
+  .dropdowns {
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+}

@@ -1,7 +1,7 @@
 .card {
   display: grid;
   grid-template-columns: 90px 90px 60px 120px;
-  grid-template-rows: 178px 62px 124px;
+  grid-template-rows: 178px 75px 124px;
   grid-template-areas:
     "header header header header"
     "title title title time"
