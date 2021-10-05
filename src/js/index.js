@@ -1,9 +1,6 @@
 import CreateTag from "./CreateTag";
 import CreateCard from "./CreateCard";
 import { recipes } from "./recipes";
-// import { pushAppareil } from "./pushElement";
-// import { pushIngredient } from "./pushElement";
-// import { pushUstensil } from "./pushElement";
 import { filterRecipeWithInput } from "./filterRecipeWithInput";
 import { filterRecipeWithTag } from "./filterRecipeWithTag";
 import { showDropdownItems } from "./showDropdown";
@@ -14,9 +11,8 @@ const inputSearch = document.getElementById("search");
 const tagBox = document.querySelector(".tags");
 const main = document.querySelector(".main");
 const dropdownBox = document.querySelector(".dropdowns");
-const iconsDropdownDown = document.querySelectorAll(".dropdown__icon.down");
-const iconsDropdownUp = document.querySelectorAll(".dropdown__icon.up");
 let recipesFiltered = new Array();
+let tagsSeleted = new Array();
 
 new Dropdown(dropdownBox, "ingredient");
 new Dropdown(dropdownBox, "appareil");
@@ -25,42 +21,26 @@ new Dropdown(dropdownBox, "ustensil");
 // AFFICHAGE DE LA PAGE
 window.addEventListener("load", () => {
   showDropdownItems(recipes);
-  addTag(recipes);
+  //addTag(recipes);
 });
 
 // SAISI DANS L'INPUT SEARCH
 inputSearch.addEventListener("input", () => {
-  if (inputSearch.value.length >= 3) {
-    recipesToShow(filterRecipeWithInput(recipes, inputSearch));
-    console.log(recipesFiltered);
-  } else {
-    recipesFiltered = [];
-    showDropdownItems(recipes);
+  if (
+    tagsSeleted.length === 0 &&
+    recipesFiltered.length === 0 &&
+    inputSearch.value.length < 3
+  ) {
     main.innerHTML = "";
+    showDropdownItems(recipes);
+  } else if (inputSearch.value.length >= 3 && tagsSeleted.length === 0) {
+    recipesToShow(filterRecipeWithInput(recipes, inputSearch));
+  } else if (inputSearch.value.length >= 3 && tagsSeleted.length != 0) {
+    recipesToShow(filterRecipeWithInput(recipesFiltered, inputSearch));
+  } else if (inputSearch.value.length < 3 && tagsSeleted.length != 0) {
+    recipesToShow(filterRecipeWithTag(recipes, tagsSeleted[0])); /// A revoir
   }
-  addTag(recipesFiltered);
 });
-
-/// A voir si on supprime ou non
-
-// EVENT POUR L'AFFICHAGE DES DROPDOWNS
-// iconsDropdownDown.forEach((icon) => {
-//   icon.addEventListener("click", () => {
-//     icon.parentElement.style.height = "auto";
-//     icon.nextElementSibling.nextElementSibling.style.width = "auto";
-//     icon.style.display = "none";
-//     icon.nextElementSibling.style.display = "initial";
-//   });
-// });
-
-// iconsDropdownUp.forEach((icon) => {
-//   icon.addEventListener("click", () => {
-//     icon.parentElement.style.height = "60px";
-//     icon.nextElementSibling.style.width = "120px";
-//     icon.style.display = "none";
-//     icon.previousElementSibling.style.display = "initial";
-//   });
-// });
 
 /**
  * ON AJOUTE LES TAGS SUIVANT LE CLICK
@@ -69,23 +49,46 @@ function addTag(array) {
   const items = document.querySelectorAll(".dropdown__list__item");
   items.forEach((item) => {
     item.addEventListener("click", () => {
-      console.log(item.parentNode);
-      new CreateTag(tagBox, item.textContent, item.parentNode);
-      recipesToShow(filterRecipeWithTag(array, item.textContent));
+      if (!tagsSeleted.includes(item.textContent)) {
+        new CreateTag(tagBox, item.textContent, item.parentNode);
+        recipesToShow(filterRecipeWithTag(array, item.textContent));
+        tagsSeleted.push(item.textContent);
+        desactiveItem();
+      }
+    });
+  });
+  deletedTag();
+}
+
+/**
+ * ON MODIFIE LE STYLE DE L'ITEM APRES LE CLICK
+ */
+function desactiveItem() {
+  const items = document.querySelectorAll(".dropdown__list__item");
+  tagsSeleted.forEach((tag) => {
+    items.forEach((item) => {
+      if (tag === item.textContent) {
+        item.classList.add("selectedItem");
+      }
     });
   });
 }
 
+/**
+ * ON SUPPRIME LE TAG
+ */
 function deletedTag() {
   const icons = document.querySelectorAll(".tag__icon");
+  let index;
   icons.forEach((icon) => {
     icon.addEventListener("click", () => {
       let tag = icon.parentElement;
+      index = tagsSeleted.indexOf(tag.textContent);
+      tagsSeleted.splice(index, 1);
+      console.log(tagsSeleted);
       tag.remove();
-      const tagsSeleted = Array.from(document.querySelectorAll(".tag"));
-      tagsSeleted.forEach((element) => {
-        console.log(element.innerText);
-      });
+      main.innerHTML = "";
+      showDropdownItems(recipes);
     });
   });
 }
@@ -103,7 +106,6 @@ function recipesToShow(array) {
   });
   addTag(recipesFiltered);
   console.log(recipesFiltered);
-  //deletedTag();
 }
 
 /// Dropdown
@@ -134,24 +136,28 @@ inputAppareils.addEventListener("input", () => {
       ) {
         inputAppareils.parentNode.style.height = "90px";
         selectAppareil.textContent = element.innerText;
-        if (recipesFiltered.length === 0) {
-          recipesToShow(filterRecipeWithTag(recipes, selectAppareil.innerText));
-        } else {
-          recipesToShow(
-            filterRecipeWithTag(recipesFiltered, selectAppareil.innerText)
-          );
-        }
       }
-      return selectAppareil;
+      //return selectAppareil;
     });
   } else {
     inputAppareils.parentNode.style.height = "60px";
     selectAppareil.textContent = "";
-    main.innerHTML = "";
+    //main.innerHTML = "";
   }
 });
 selectAppareil.addEventListener("click", () => {
+  console.log(inputAppareils.value);
   new CreateTag(tagBox, selectAppareil.textContent, selectAppareil.parentNode);
+
+  if (recipesFiltered.length === 0) {
+    recipesToShow(filterRecipeWithTag(recipes, selectAppareil.innerText));
+  } else {
+    recipesToShow(
+      filterRecipeWithTag(recipesFiltered, selectAppareil.innerText)
+    );
+  }
+  inputAppareils.parentNode.style.height = "60px";
+  selectAppareil.textContent = "";
 });
 
 // Ustensils
@@ -256,3 +262,24 @@ selectIngredient.addEventListener("click", () => {
 //   }
 //   addElementInDropdown(element, filter); // On affiche les éléments correspond à l'entrée utilisateur
 // }
+
+/// A voir si on supprime ou non
+
+// EVENT POUR L'AFFICHAGE DES DROPDOWNS
+// iconsDropdownDown.forEach((icon) => {
+//   icon.addEventListener("click", () => {
+//     icon.parentElement.style.height = "auto";
+//     icon.nextElementSibling.nextElementSibling.style.width = "auto";
+//     icon.style.display = "none";
+//     icon.nextElementSibling.style.display = "initial";
+//   });
+// });
+
+// iconsDropdownUp.forEach((icon) => {
+//   icon.addEventListener("click", () => {
+//     icon.parentElement.style.height = "60px";
+//     icon.nextElementSibling.style.width = "120px";
+//     icon.style.display = "none";
+//     icon.previousElementSibling.style.display = "initial";
+//   });
+// });

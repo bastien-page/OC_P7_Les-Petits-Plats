@@ -60,6 +60,11 @@
   background-color: $colortertiary;
 }
 
+.selectedItem {
+  font-style: italic;
+  opacity: 0.6;
+}
+
 @media screen and (max-width: 850px) {
   .dropdown {
     margin-bottom: 1rem;
