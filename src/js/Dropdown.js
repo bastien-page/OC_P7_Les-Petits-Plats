@@ -20,9 +20,15 @@ export default class Dropdown {
     const iconDown = document.createElement("em");
     iconDown.classList.add("dropdown__icon", "down", "fas", "fa-chevron-down");
     const iconUp = document.createElement("em");
-    iconUp.classList.add("dropdown__icon", "up", "fas", "fa-chevron-up");
+    iconUp.classList.add(
+      "dropdown__icon",
+      "up",
+      "fas",
+      "fa-chevron-up",
+      "hiddenIcon"
+    );
     const list = document.createElement("div");
-    list.classList.add("dropdown__list");
+    list.classList.add("dropdown__list", "reduceList");
     list.setAttribute("id", "dropdown" + this.dropdownName);
 
     this.selector.appendChild(dropdown);
@@ -51,10 +57,12 @@ export default class Dropdown {
     let icons = document.querySelectorAll(".down");
     icons.forEach((icon) => {
       icon.addEventListener("click", () => {
-        icon.parentElement.style.height = "auto";
-        icon.nextElementSibling.nextElementSibling.style.width = "auto";
-        icon.nextElementSibling.style.display = "initial";
-        icon.style.display = "none";
+        icon.parentElement.classList.add("showDropdown");
+        icon.nextElementSibling.nextElementSibling.classList.remove(
+          "reduceList"
+        );
+        icon.nextElementSibling.classList.remove("hiddenIcon");
+        icon.classList.add("hiddenIcon");
       });
     });
   }
@@ -63,10 +71,10 @@ export default class Dropdown {
     let icons = document.querySelectorAll(".up");
     icons.forEach((icon) => {
       icon.addEventListener("click", () => {
-        icon.parentElement.style.height = "60px";
-        icon.nextElementSibling.style.width = "120px";
-        icon.style.display = "none";
-        icon.previousElementSibling.style.display = "initial";
+        icon.parentElement.classList.remove("showDropdown");
+        icon.nextElementSibling.classList.add("reduceList");
+        icon.classList.add("hiddenIcon");
+        icon.previousElementSibling.classList.remove("hiddenIcon");
       });
     });
   }

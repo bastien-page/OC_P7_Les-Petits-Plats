@@ -19,7 +19,6 @@
     cursor: pointer;
   }
   &__list {
-    width: 120px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     -moz-column-gap: 1rem;
@@ -46,8 +45,16 @@
   right: 1rem;
 }
 
-.up {
+.hiddenIcon {
   display: none;
+}
+
+.showDropdown {
+  height: auto;
+}
+
+.reduceList {
+  width: 120px;
 }
 
 .ingredient {
