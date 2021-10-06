@@ -95,6 +95,10 @@ body {
   width: 120px;
 }
 
+.showSelect {
+  height: 90px;
+}
+
 .ingredient {
   background-color: #3282f7;
 }
