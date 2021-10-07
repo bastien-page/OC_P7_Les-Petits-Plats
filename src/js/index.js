@@ -63,9 +63,9 @@ function addTag(array) {
         desactiveItem();
       }
       console.log(tagsSeleted);
+      deletedTag();
     });
   });
-  deletedTag();
 }
 
 /**
@@ -86,18 +86,38 @@ function desactiveItem() {
  * ON SUPPRIME LE TAG
  */
 function deletedTag() {
-  const icons = document.querySelectorAll(".tag__icon");
-  let index;
+  const icons = Array.from(document.querySelectorAll(".tag__icon"));
+  let tagInfo;
   icons.forEach((icon) => {
     icon.addEventListener("click", () => {
       let tag = icon.parentElement;
-      index = tagsSeleted.indexOf(tag.textContent);
-      tagsSeleted.splice(index, 1);
-      console.log(tagsSeleted);
+      tagInfo = tag.textContent;
       tag.remove();
-      //main.innerHTML = "";
+      filterRecipeAfterDeleteTag();
+      desactiveItem();
     });
   });
+}
+
+/**
+ * ON RELANCE L'AFFICHAGE DES RECETTES SUITE A LA SUPPRESSION DU TAG
+ */
+function filterRecipeAfterDeleteTag() {
+  const tags = document.querySelectorAll(".tag");
+  let tagsValue = [];
+  for (let i = 0; i < tags.length; i++) {
+    tagsValue.push(tags[i].innerText);
+  }
+  tagsSeleted = tagsValue;
+
+  for (let i = 0; i < tagsSeleted.length; i++) {
+    recipesToShow(filterRecipeWithTag(recipes, tagsSeleted[i]));
+  }
+  if (tagsSeleted.length === 0) {
+    main.innerHTML = "";
+    showDropdownItems(recipes);
+    addTag(recipes);
+  }
 }
 
 /**

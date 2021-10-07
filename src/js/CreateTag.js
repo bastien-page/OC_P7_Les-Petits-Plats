@@ -4,7 +4,6 @@ export default class CreateTag {
     this.string = string;
     this.elementParent = elementParent;
     this.element = this.buildTag(string);
-    //this.deletedTag();
   }
 
   buildTag(string) {
@@ -41,17 +40,5 @@ export default class CreateTag {
     }
 
     return tag;
-  }
-
-  deletedTag() {
-    const icons = document.querySelectorAll(".tag__icon");
-    const main = document.querySelector(".main");
-    icons.forEach((icon) => {
-      icon.addEventListener("click", () => {
-        let tag = icon.parentElement;
-        tag.remove();
-        main.innerHTML = "";
-      });
-    });
   }
 }
