@@ -26,6 +26,7 @@ window.addEventListener("load", () => {
 });
 
 // SAISI DANS L'INPUT SEARCH
+// SAISI DANS L'INPUT SEARCH
 inputSearch.addEventListener("input", () => {
   if (
     tagsSeleted.length === 0 &&
@@ -128,9 +129,10 @@ function recipesToShow(array) {
   recipesFiltered = array;
   showDropdownItems(recipesFiltered);
   main.innerHTML = "";
-  recipesFiltered.map((recipe) => {
-    new CreateCard(main, recipe);
-  });
+  for (let i = 0; i < recipesFiltered.length; i++) {
+    new CreateCard(main, recipesFiltered[i]);
+    console.log("yes");
+  }
   addTag(recipesFiltered);
   console.log(recipesFiltered);
 }
@@ -150,37 +152,37 @@ const inputIngredients = document.querySelector(
 
 // Ingredient
 inputIngredients.addEventListener("input", () => {
-  const list = Array.from(document.querySelectorAll("#dropdowningredient>p"));
+  const list = document.querySelectorAll("#dropdownappareil>p");
   if (
     inputIngredients.parentNode
       .getAttribute("class")
       .includes("showDropdown") === true
   ) {
     if (inputIngredients.value.length > 2) {
-      list.forEach((item) => {
+      for (let i = 0; i < list.length; i++) {
         if (
-          item.innerText
+          list[i].innerText
             .toLowerCase()
             .includes(inputIngredients.value.toLowerCase())
         ) {
-          selectIngredient.textContent = item.innerText;
+          selectIngredient.textContent = list[i].innerText;
         }
-      });
+      }
     } else {
       selectIngredient.textContent = "";
     }
   } else {
     if (inputIngredients.value.length > 2) {
-      list.forEach((item) => {
+      for (let i = 0; i < list.length; i++) {
         if (
-          item.innerText
+          list[i].innerText
             .toLowerCase()
             .includes(inputIngredients.value.toLowerCase())
         ) {
-          selectIngredient.textContent = item.innerText;
+          selectIngredient.textContent = list[i].innerText;
           inputIngredients.parentNode.classList.add("showSelect");
         }
-      });
+      }
     } else {
       selectIngredient.textContent = "";
       inputIngredients.parentNode.classList.remove("showSelect");
@@ -210,36 +212,36 @@ selectIngredient.addEventListener("click", () => {
 
 // Appareil
 inputAppareils.addEventListener("input", () => {
-  const list = Array.from(document.querySelectorAll("#dropdownappareil>p"));
+  const list = document.querySelectorAll("#dropdownappareil>p");
   if (
     inputAppareils.parentNode.getAttribute("class").includes("showDropdown") ===
     true
   ) {
     if (inputAppareils.value.length > 2) {
-      list.forEach((item) => {
+      for (let i = 0; i < list.length; i++) {
         if (
-          item.innerText
+          list[i].innerText
             .toLowerCase()
             .includes(inputAppareils.value.toLowerCase())
         ) {
-          selectAppareil.textContent = item.innerText;
+          selectAppareil.textContent = list[i].innerText;
         }
-      });
+      }
     } else {
       selectAppareil.textContent = "";
     }
   } else {
     if (inputAppareils.value.length > 2) {
-      list.forEach((item) => {
+      for (let i = 0; i < list.length; i++) {
         if (
-          item.innerText
+          list[i].innerText
             .toLowerCase()
             .includes(inputAppareils.value.toLowerCase())
         ) {
-          selectAppareil.textContent = item.innerText;
+          selectAppareil.textContent = list[i].innerText;
           inputAppareils.parentNode.classList.add("showSelect");
         }
-      });
+      }
     } else {
       selectAppareil.textContent = "";
       inputAppareils.parentNode.classList.remove("showSelect");
@@ -265,36 +267,36 @@ selectAppareil.addEventListener("click", () => {
 
 // Ustensils
 inputUstensils.addEventListener("input", () => {
-  const list = Array.from(document.querySelectorAll("#dropdownustensil>p"));
+  const list = document.querySelectorAll("#dropdownappareil>p");
   if (
     inputUstensils.parentNode.getAttribute("class").includes("showDropdown") ===
     true
   ) {
     if (inputUstensils.value.length > 2) {
-      list.forEach((item) => {
+      for (let i = 0; i < list.length; i++) {
         if (
-          item.innerText
+          list[i].innerText
             .toLowerCase()
             .includes(inputUstensils.value.toLowerCase())
         ) {
-          selectUstensil.textContent = item.innerText;
+          selectUstensil.textContent = list[i].innerText;
         }
-      });
+      }
     } else {
       selectUstensil.textContent = "";
     }
   } else {
     if (inputUstensils.value.length > 2) {
-      list.forEach((item) => {
+      for (let i = 0; i < list.length; i++) {
         if (
-          item.innerText
+          list[i].innerText
             .toLowerCase()
             .includes(inputUstensils.value.toLowerCase())
         ) {
-          selectUstensil.textContent = item.innerText;
+          selectUstensil.textContent = list[i].innerText;
           inputUstensils.parentNode.classList.add("showSelect");
         }
-      });
+      }
     } else {
       selectUstensil.textContent = "";
       inputUstensils.parentNode.classList.remove("showSelect");
