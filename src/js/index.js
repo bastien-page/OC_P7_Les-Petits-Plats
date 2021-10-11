@@ -26,7 +26,6 @@ window.addEventListener("load", () => {
 });
 
 // SAISI DANS L'INPUT SEARCH
-// SAISI DANS L'INPUT SEARCH
 inputSearch.addEventListener("input", () => {
   if (
     tagsSeleted.length === 0 &&
@@ -45,7 +44,7 @@ inputSearch.addEventListener("input", () => {
 });
 
 /**
- * ON AJOUTE LES TAGS SUIVANT LE CLICKs
+ * ON AJOUTE LES TAGS SUIVANT LE CLICK
  */
 function addTag(array) {
   const items = document.querySelectorAll(".dropdown__list__item");
@@ -63,7 +62,6 @@ function addTag(array) {
         tagsSeleted.push(item.textContent);
         desactiveItem();
       }
-      console.log(tagsSeleted);
       deletedTag();
     });
   });
@@ -110,7 +108,6 @@ function filterRecipeAfterDeleteTag() {
     tagsValue.push(tags[i].innerText);
   }
   tagsSeleted = tagsValue;
-
   for (let i = 0; i < tagsSeleted.length; i++) {
     recipesToShow(filterRecipeWithTag(recipes, tagsSeleted[i]));
   }
@@ -131,10 +128,8 @@ function recipesToShow(array) {
   main.innerHTML = "";
   for (let i = 0; i < recipesFiltered.length; i++) {
     new CreateCard(main, recipesFiltered[i]);
-    console.log("yes");
   }
   addTag(recipesFiltered);
-  console.log(recipesFiltered);
 }
 
 // GESTION DES INPUTS DANS LES DROPDOWNS
@@ -196,7 +191,6 @@ selectIngredient.addEventListener("click", () => {
     selectIngredient.parentNode
   );
   tagsSeleted.push(selectIngredient.textContent);
-  console.log(tagsSeleted);
   if (recipesFiltered.length === 0) {
     recipesToShow(filterRecipeWithTag(recipes, selectIngredient.textContent));
   } else {
@@ -251,7 +245,6 @@ inputAppareils.addEventListener("input", () => {
 selectAppareil.addEventListener("click", () => {
   new CreateTag(tagBox, selectAppareil.textContent, selectAppareil.parentNode);
   tagsSeleted.push(selectAppareil.textContent);
-  console.log(tagsSeleted);
   if (recipesFiltered.length === 0) {
     recipesToShow(filterRecipeWithTag(recipes, selectAppareil.textContent));
   } else {
@@ -306,7 +299,6 @@ inputUstensils.addEventListener("input", () => {
 selectUstensil.addEventListener("click", () => {
   new CreateTag(tagBox, selectUstensil.textContent, selectUstensil.parentNode);
   tagsSeleted.push(selectUstensil.textContent);
-  console.log(tagsSeleted);
   if (recipesFiltered.length === 0) {
     recipesToShow(filterRecipeWithTag(recipes, selectUstensil.textContent));
   } else {
