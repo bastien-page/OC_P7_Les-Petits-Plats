@@ -62,7 +62,6 @@ function addTag(array) {
         tagsSeleted.push(item.textContent);
         desactiveItem();
       }
-      console.log(tagsSeleted);
       deletedTag();
     });
   });
@@ -132,7 +131,6 @@ function recipesToShow(array) {
     new CreateCard(main, recipe);
   });
   addTag(recipesFiltered);
-  console.log(recipesFiltered);
 }
 
 // GESTION DES INPUTS DANS LES DROPDOWNS
@@ -194,7 +192,6 @@ selectIngredient.addEventListener("click", () => {
     selectIngredient.parentNode
   );
   tagsSeleted.push(selectIngredient.textContent);
-  console.log(tagsSeleted);
   if (recipesFiltered.length === 0) {
     recipesToShow(filterRecipeWithTag(recipes, selectIngredient.textContent));
   } else {
@@ -249,7 +246,6 @@ inputAppareils.addEventListener("input", () => {
 selectAppareil.addEventListener("click", () => {
   new CreateTag(tagBox, selectAppareil.textContent, selectAppareil.parentNode);
   tagsSeleted.push(selectAppareil.textContent);
-  console.log(tagsSeleted);
   if (recipesFiltered.length === 0) {
     recipesToShow(filterRecipeWithTag(recipes, selectAppareil.textContent));
   } else {
@@ -304,7 +300,6 @@ inputUstensils.addEventListener("input", () => {
 selectUstensil.addEventListener("click", () => {
   new CreateTag(tagBox, selectUstensil.textContent, selectUstensil.parentNode);
   tagsSeleted.push(selectUstensil.textContent);
-  console.log(tagsSeleted);
   if (recipesFiltered.length === 0) {
     recipesToShow(filterRecipeWithTag(recipes, selectUstensil.textContent));
   } else {

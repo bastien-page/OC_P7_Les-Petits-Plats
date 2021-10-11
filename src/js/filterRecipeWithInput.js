@@ -7,17 +7,19 @@
 export const filterRecipeWithInput = (array, input) => {
   let arrayfiltered = new Array();
   let filter = input.value.toLowerCase();
-  array.filter((element) => {
-    if (
-      element.name.toLowerCase().includes(filter) ||
-      element.description.toLowerCase().includes(filter) ||
-      testIngredient(element.ingredients, filter) === true
-    ) {
-      if (!arrayfiltered.includes(element)) arrayfiltered.push(element);
-    }
-  });
+  arrayfiltered = array.filter((element) => testRecipeInput(element, filter));
   return arrayfiltered;
 };
+
+function testRecipeInput(element, input) {
+  if (
+    element.name.toLowerCase().includes(input) ||
+    element.description.toLowerCase().includes(input) ||
+    testIngredient(element.ingredients, input) === true
+  ) {
+    return element;
+  }
+}
 
 /**
  * ON TESTE SI LE TAG EST DANS LA LISTE DES INGREDIENTS

@@ -9,18 +9,19 @@ import { testIngredient } from "./filterRecipeWithInput";
  */
 export const filterRecipeWithTag = (array, string) => {
   let filter = string.toLowerCase();
-  let arrayfiltered = new Array();
-  array.filter((element) => {
-    if (
-      element.appliance.toLowerCase().includes(filter) ||
-      testIngredient(element.ingredients, filter) === true ||
-      testUstensils(element.ustensils, filter) === true
-    ) {
-      arrayfiltered.push(element);
-    }
-  });
+  let arrayfiltered = array.filter((element) => testRecipeTag(element, filter));
   return arrayfiltered;
 };
+
+function testRecipeTag(element, input) {
+  if (
+    element.appliance.toLowerCase().includes(input) ||
+    testIngredient(element.ingredients, input) === true ||
+    testUstensils(element.ustensils, input) === true
+  ) {
+    return element;
+  }
+}
 
 /**
  * ON TESTE SI LE TAG EST DANS LA LISTE DES USTENSILES
