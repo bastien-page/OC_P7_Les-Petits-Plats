@@ -1,5 +1,5 @@
 /**
- *
+ *ON FILTRE LES RECETTES AVEC LA SAISIE DE L'UTILISATEUR
  * @param {array} array -Tableau de recette
  * @param {string} input -Saisi de l'utilisateur
  * @param {array} arrayfiltered -Tableau de recette filtrer suivant la saisie

@@ -15,11 +15,12 @@ const dropdownBox = document.querySelector(".dropdowns");
 let recipesFiltered = new Array();
 let tagsSeleted = new Array();
 
+//CREATION DES DROPDOWNS
 new Dropdown(dropdownBox, "ingredient");
 new Dropdown(dropdownBox, "appareil");
 new Dropdown(dropdownBox, "ustensil");
 
-// AFFICHAGE DE LA PAGE
+// AFFICHAGE DE LA PAGE AU CHARGEMENT
 window.addEventListener("load", () => {
   showDropdownItems(recipes);
   addTag(recipes);
@@ -39,12 +40,12 @@ inputSearch.addEventListener("input", () => {
   } else if (inputSearch.value.length >= 3 && tagsSeleted.length != 0) {
     recipesToShow(filterRecipeWithInput(recipesFiltered, inputSearch));
   } else if (inputSearch.value.length < 3 && tagsSeleted.length != 0) {
-    recipesToShow(filterRecipeWithTag(recipes, tagsSeleted[0])); /// A revoir
+    recipesToShow(filterRecipeWithTag(recipes, tagsSeleted[0]));
   }
 });
 
 /**
- * ON AJOUTE LES TAGS SUIVANT LE CLICKs
+ * ON AJOUTE LES TAGS SUIVANT LE CLICK
  */
 function addTag(array) {
   const items = document.querySelectorAll(".dropdown__list__item");
@@ -68,7 +69,7 @@ function addTag(array) {
 }
 
 /**
- * ON MODIFIE LE STYLE DE L'ITEM APRES LE CLICK
+ * ON MODIFIE LE STYLE DE L'ITEM APRES LE CLICK POUR LE RENDRE INUTILISABLE
  */
 function desactiveItem() {
   const items = document.querySelectorAll(".dropdown__list__item");
