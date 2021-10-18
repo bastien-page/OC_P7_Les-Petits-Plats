@@ -15,6 +15,7 @@ const dropdownBox = document.querySelector(".dropdowns");
 let recipesFiltered = new Array();
 let tagsSeleted = new Array();
 
+// CREATION DES DROPDOWNS
 new Dropdown(dropdownBox, "ingredient");
 new Dropdown(dropdownBox, "appareil");
 new Dropdown(dropdownBox, "ustensil");
@@ -39,7 +40,7 @@ inputSearch.addEventListener("input", () => {
   } else if (inputSearch.value.length >= 3 && tagsSeleted.length != 0) {
     recipesToShow(filterRecipeWithInput(recipesFiltered, inputSearch));
   } else if (inputSearch.value.length < 3 && tagsSeleted.length != 0) {
-    recipesToShow(filterRecipeWithTag(recipes, tagsSeleted[0])); /// A revoir
+    recipesToShow(filterRecipeWithTag(recipes, tagsSeleted[0]));
   }
 });
 
