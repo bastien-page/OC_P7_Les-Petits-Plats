@@ -16,28 +16,36 @@ function recupItem(array) {
   let ustensils = [];
   let ingredients = [];
 
-  array.forEach((element) => {
-    if (!appareils.includes(element.appliance.toLowerCase().replace(".", ""))) {
-      appareils.push(element.appliance.toLowerCase().replace(".", ""));
+  for (let i = 0; i < array.length; i++) {
+    if (
+      !appareils.includes(array[i].appliance.toLowerCase().replace(".", ""))
+    ) {
+      appareils.push(array[i].appliance.toLowerCase().replace(".", ""));
       appareils.sort();
     }
-    element.ustensils.forEach((ustensil) => {
-      if (!ustensils.includes(ustensil.toLowerCase().replace(".", ""))) {
-        ustensils.push(ustensil.toLowerCase().replace(".", ""));
+    let ustensilArray = array[i].ustensils;
+    for (let i = 0; i < ustensilArray.length; i++) {
+      if (
+        !ustensils.includes(ustensilArray[i].toLowerCase().replace(".", ""))
+      ) {
+        ustensils.push(ustensilArray[i].toLowerCase().replace(".", ""));
         ustensils.sort();
       }
-    });
-    element.ingredients.forEach((ingredient) => {
+    }
+    let ingredientArray = array[i].ingredients;
+    for (let i = 0; i < ingredientArray.length; i++) {
       if (
         !ingredients.includes(
-          ingredient.ingredient.toLowerCase().replace(".", "")
+          ingredientArray[i].ingredient.toLowerCase().replace(".", "")
         )
       ) {
-        ingredients.push(ingredient.ingredient.toLowerCase().replace(".", ""));
+        ingredients.push(
+          ingredientArray[i].ingredient.toLowerCase().replace(".", "")
+        );
         ingredients.sort();
       }
-    });
-  });
+    }
+  }
   let items = { appareils, ustensils, ingredients };
   return items;
 }
@@ -55,15 +63,19 @@ function addItemInDropdown(obj) {
   dropdownUstensil.innerHTML = "";
   dropdownAppareil.innerHTML = "";
 
-  obj.appareils.forEach((appareil) => {
-    createElement(appareil, dropdownAppareil);
-  });
-  obj.ustensils.forEach((ustensil) => {
-    createElement(ustensil, dropdownUstensil);
-  });
-  obj.ingredients.forEach((ingredient) => {
-    createElement(ingredient, dropdownIngredient);
-  });
+  let appareils = obj.appareils;
+  let ustensils = obj.ustensils;
+  let ingredients = obj.ingredients;
+
+  for (let i = 0; i < appareils.length; i++) {
+    createElement(appareils[i], dropdownAppareil);
+  }
+  for (let i = 0; i < ustensils.length; i++) {
+    createElement(ustensils[i], dropdownUstensil);
+  }
+  for (let i = 0; i < ingredients.length; i++) {
+    createElement(ingredients[i], dropdownIngredient);
+  }
 }
 
 /**

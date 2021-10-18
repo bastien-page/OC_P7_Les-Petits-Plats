@@ -10,15 +10,16 @@ import { testIngredient } from "./filterRecipeWithInput";
 export const filterRecipeWithTag = (array, string) => {
   let filter = string.toLowerCase();
   let arrayfiltered = new Array();
-  array.filter((element) => {
+
+  for (let i = 0; i < array.length; i++) {
     if (
-      element.appliance.toLowerCase().includes(filter) ||
-      testIngredient(element.ingredients, filter) === true ||
-      testUstensils(element.ustensils, filter) === true
+      array[i].appliance.toLowerCase().includes(filter) ||
+      testIngredient(array[i].ingredients, filter) === true ||
+      testUstensils(array[i].ustensils, filter) === true
     ) {
-      arrayfiltered.push(element);
+      arrayfiltered.push(array[i]);
     }
-  });
+  }
   return arrayfiltered;
 };
 
@@ -30,10 +31,12 @@ export const filterRecipeWithTag = (array, string) => {
  */
 function testUstensils(array, string) {
   let resp = null;
-  array.forEach((element) => {
-    if (element.toLowerCase().includes(string.toLowerCase())) {
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].toLowerCase().includes(string.toLowerCase())) {
       resp = true;
     }
-  });
+  }
+
   return resp;
 }
